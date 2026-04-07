@@ -1,17 +1,18 @@
-from __future__ import annotations
-
-
 class Knight:
     def __init__(self, config: dict) -> None:
         self.name: str = config["name"]
         self.hp: int = config["hp"]
         self.power: int = config["power"]
         self.protection: int = 0
+        self.apply_equipment(config)
 
+    def apply_equipment(self, config: dict) -> None:
         for item in config.get("armour", []):
             self.protection += item["protection"]
 
-        self.power += config["weapon"]["power"]
+        weapon = config.get("weapon")
+        if weapon:
+            self.power += weapon["power"]
 
         potion = config.get("potion")
         if potion:
